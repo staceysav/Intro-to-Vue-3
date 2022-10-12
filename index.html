@@ -1,19 +1,58 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <title>Vue Mastery</title>
-    <!-- Import Styles -->
-    <link rel="stylesheet" href="./assets/styles.css" />
-    <!-- Import Vue.js -->
-    <script src="https://unpkg.com/vue@3.0.0-beta.12/dist/vue.global.js"></script>
-  </head>
-  <body>
-    <div id="app">
-      <h1>Product goes here</h1>
+
+<head>
+  <meta charset="UTF-8" />
+  <title>Vue Mastery</title>
+  <!-- Import Styles -->
+  <link rel="stylesheet" href="./assets/styles.css" />
+  <!-- Import Vue.js -->
+  <script src="https://unpkg.com/vue@3.0.0-beta.12/dist/vue.global.js"></script>
+</head>
+
+<body>
+  <div id="app">
+    <!-- Printing out a value of data object -->
+    <h1>{{ product }}</h1>
+    <p>{{description}}</p>
+    <!-- V-if (if onSale is strue...) and e-else. There's also v-else-if -->
+    <p v-if="onSale">On sale</p>
+    <p v-else>Out of sale</p>
+    <!-- V-for for arrays to print a list -->
+    <ul>
+      <li v-for="size in sizes">{{ size }}</li>
+    </ul>
+    <!-- V-for for arrays with objects. Setting key attribute to the div (element of v-for). it gives each DOM element a unique key. -->
+    <!-- Added new class and STYLING with bind style. For many styling changes, you can add styles in the data object (in main.js) -->
+    <div v-for="color in colors" 
+      :key="color.id" 
+      class="color-circle" 
+      :style="{backgroundColor: color.color}"
+      @mouseover="updateImage(color.image)">
     </div>
 
-    <!-- Import Js -->
-    <script src="./main.js"></script>
-  </body>
+
+    <!-- Div that displays Cart(number of items). cart is taken from main.js - data obkect -->
+    <div class="cart">Cart({{ cart }})</div>
+
+    <!-- Made the button disabled when the item is out of stock and 
+      added a new class in this situation -->
+    <button class="button" 
+      :disabled="!inStock" 
+      :class="{ disabledButton: !inStock}" 
+      @click="addToCart">Add to cart
+    </button>
+
+  </div>
+
+  <!-- Import Js -->
+  <script src="./main.js"></script>
+
+  <script>
+    const mountedApp = app.mount('#app')
+  </script>
+</body>
+<!-- Binded the class if the item is out of stock. -->
+<!-- <img :class="{ 'out-of-stock-img': !inStock }" v-bind:src="image"> -->
 </html>
+<!-- V-bind (or just :) is used with values that can be dynamically changed -->
